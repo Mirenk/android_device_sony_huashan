@@ -12,6 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# Inherit from Sony common
+include device/sony/common/BoardConfigCommon.mk
+
 TARGET_SPECIFIC_HEADER_PATH += device/sony/huashan/include
 
 # Board overrides
