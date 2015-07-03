@@ -12,17 +12,26 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# inherit from msm8960-common
-include device/sony/msm8960-common/BoardConfigCommon.mk
-
 TARGET_SPECIFIC_HEADER_PATH += device/sony/huashan/include
+
+# Board overrides
+TARGET_NO_BOOTLOADER := true
+TARGET_NO_RADIOIMAGE := true
 
 # Kernel properties
 TARGET_KERNEL_SOURCE := kernel/sony/msm8x60
 TARGET_KERNEL_CONFIG := cm_viskan_huashan_defconfig
 
+# Architecture
+TARGET_ARCH := arm
+TARGET_CPU_ABI := armeabi-v7a
+TARGET_CPU_ABI2 := armeabi
+TARGET_ARCH_VARIANT := armv7-a-neon
+TARGET_CPU_VARIANT := krait
+
 # Platform
 TARGET_BOOTLOADER_BOARD_NAME := MSM8960
+TARGET_BOARD_PLATFORM := msm8960
 BOARD_VENDOR_PLATFORM := viskan
 
 # Kernel information
@@ -75,7 +84,15 @@ SOMC_CFG_SENSORS_LIGHT_AS3677 := yes
 SOMC_CFG_SENSORS_LIGHT_AS3677_MAXRANGE := 12276
 SOMC_CFG_SENSORS_PROXIMITY_APDS9702 := yes
 
+# Display HAL
+USE_OPENGL_RENDERER := true
+TARGET_USES_ION := true
+TARGET_USES_C2D_COMPOSITION := true
+
+TARGET_PROVIDES_LIBLIGHT := true
+
 # Camera
+TARGET_PROVIDES_CAMERA_HAL := true
 USE_DEVICE_SPECIFIC_CAMERA := true
 
 # GPS
@@ -83,10 +100,16 @@ BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE := $(TARGET_BOARD_PLATFORM)
 TARGET_NO_RPC := true
 
 # Bluetooth
+BOARD_HAVE_BLUETOOTH := true
+BOARD_HAVE_BLUETOOTH_QCOM := true
+BLUETOOTH_HCI_USE_MCT := true
 BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/sony/huashan/bluetooth
 
 # RIL
 BOARD_PROVIDES_LIBRIL := true
+
+# Bionic
+MALLOC_IMPL := dlmalloc
 
 # Vold
 TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/devices/platform/msm_hsusb/gadget/lun%d/file
@@ -104,10 +127,14 @@ BOARD_HAS_NO_SELECT_BUTTON := true
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_USE_F2FS := true
 
+EXTENDED_FONT_FOOTPRINT := true
+
 # Assert
 TARGET_OTA_ASSERT_DEVICE := C5302,C5303,C5306,huashan
 
 # Audio
+BOARD_USES_ALSA_AUDIO := true
+BOARD_USES_LEGACY_ALSA_AUDIO :=
 TARGET_USES_QCOM_COMPRESSED_AUDIO := true
 BOARD_HAVE_NEW_QCOM_CSDCLIENT := true
 BOARD_HAVE_CSD_FAST_CALL_SWITCH := true
@@ -118,6 +145,16 @@ BOARD_USES_SEPERATED_VOICE_SPEAKER_MIC := true
 # Fm Radio
 AUDIO_FEATURE_ENABLED_FM := true
 QCOM_FM_ENABLED := true
+
+# PowerHAL
+TARGET_POWERHAL_VARIANT := qcom
+CM_POWERHAL_EXTENSION := qcom
+
+# QCOM hardware
+BOARD_USES_QCOM_HARDWARE := true
+
+# RIL
+BOARD_RIL_CLASS := ../../../device/sony/huashan/ril/
 
 # TWRP configs
 TARGET_NO_SEPARATE_RECOVERY := true

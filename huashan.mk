@@ -15,9 +15,6 @@
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.vendor.extension_library=libqti-perfd-client.so
 
-# inherit from msm8960-common
-$(call inherit-product, device/sony/msm8960-common/msm8960.mk)
-
 DEVICE_PACKAGE_OVERLAYS += device/sony/huashan/overlay
 
 # This device is xhdpi.
@@ -42,6 +39,12 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.wifi.xml:system/etc/permissions/android.hardware.wifi.xml \
     frameworks/native/data/etc/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml \
     frameworks/native/data/etc/android.hardware.telephony.gsm.xml:system/etc/permissions/android.hardware.telephony.gsm.xml
+
+# Media profile
+PRODUCT_COPY_FILES += \
+    frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:system/etc/media_codecs_google_audio.xml \
+    frameworks/av/media/libstagefright/data/media_codecs_google_telephony.xml:system/etc/media_codecs_google_telephony.xml \
+    frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:system/etc/media_codecs_google_video.xml
 
 # Device specific init scripts
 PRODUCT_COPY_FILES += \
@@ -77,7 +80,8 @@ PRODUCT_COPY_FILES += \
 
 # Media
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/rootdir/system/etc/media_profiles.xml:system/etc/media_profiles.xml
+    $(LOCAL_PATH)/rootdir/system/etc/media_profiles.xml:system/etc/media_profiles.xml \
+    $(LOCAL_PATH)/rootdir/system/etc/media_codecs.xml:system/etc/media_codecs.xml
 
 # GPS
 PRODUCT_COPY_FILES += \
@@ -87,6 +91,9 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
    $(LOCAL_PATH)/rootdir/system/etc/wifi/wpa_supplicant_overlay.conf:system/etc/wifi/wpa_supplicant_overlay.conf \
    $(LOCAL_PATH)/rootdir/system/etc/wifi/p2p_supplicant_overlay.conf:system/etc/wifi/p2p_supplicant_overlay.conf
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/rootdir/system/etc/hostapd/hostapd_default.conf:system/etc/hostapd/hostapd_default.conf
 
 # Touchpad
 PRODUCT_COPY_FILES += \
@@ -134,12 +141,25 @@ endif
 PRODUCT_COPY_FILES += \
     $(NFCEE_ACCESS_PATH):system/etc/nfcee_access.xml
 
+# Display
+PRODUCT_PACKAGES += \
+    libgenlock \
+    libmemalloc \
+    liboverlay \
+    libqdutils \
+    libtilerenderer \
+    libI420colorconvert
+
 # QCOM Display
 PRODUCT_PACKAGES += \
     hwcomposer.msm8960 \
     gralloc.msm8960 \
     copybit.msm8960 \
     memtrack.msm8960
+
+# Lights
+PRODUCT_PACKAGES += \
+    lights.msm8960
 
 # Audio
 PRODUCT_PACKAGES += \
@@ -166,6 +186,7 @@ PRODUCT_PACKAGES += \
 # Camera
 PRODUCT_PACKAGES += \
     camera.sony \
+    camera.qcom \
     camera.msm8960 \
     libmmcamera_interface \
     libmmcamera_interface2
@@ -187,6 +208,41 @@ PRODUCT_PACKAGES += \
     mac-update \
     wcnss_service
 
+# Media
+PRODUCT_PACKAGES += \
+    qcmediaplayer
+
+PRODUCT_BOOT_JARS += \
+    qcmediaplayer
+
+# Omx
+PRODUCT_PACKAGES += \
+    libOmxAacEnc \
+    libOmxAmrEnc \
+    libOmxCore \
+    libOmxEvrcEnc \
+    libOmxQcelp13Enc \
+    libOmxVdec \
+    libOmxVenc \
+    libc2dcolorconvert \
+    libdashplayer \
+    libdivxdrmdecrypt \
+    libmm-omxcore \
+    libstagefrighthw
+
+PRODUCT_PACKAGES += \
+    libQWiFiSoftApCfg \
+    libqsap_sdk \
+    libwpa_client \
+    hostapd \
+    dhcpcd.conf \
+    wpa_supplicant \
+    wpa_supplicant.conf
+
+# Power
+PRODUCT_PACKAGES += \
+    power.qcom
+
 # DRM
 PRODUCT_PROPERTY_OVERRIDES += \
     drm.service.enabled=true
@@ -206,13 +262,21 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Radio and Telephony
 PRODUCT_PROPERTY_OVERRIDES += \
+    ro.telephony.ril_class=SonyRIL \
     ro.ril.transmitpower=true \
     persist.radio.add_power_save=1 \
     rild.libpath=/system/lib/libril-qc-qmi-1.so
 
 # Display
 PRODUCT_PROPERTY_OVERRIDES += \
-    debug.composition.type=c2d
+    debug.composition.type=c2d \
+    persist.hwc.mdpcomp.enable=true
+
+# WiFi
+PRODUCT_PROPERTY_OVERRIDES += \
+    wlan.driver.ath=0 \
+    wifi.interface=wlan0 \
+    wifi.supplicant_scan_interval=15
 
 # Audio
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -224,6 +288,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # QCOM Location
 PRODUCT_PROPERTY_OVERRIDES += \
+    com.qc.hardware=true \
     ro.qc.sdk.izat.premium_enabled=0 \
     ro.qc.sdk.izat.service_mask=0x4 \
     persist.gps.qc_nlp_in_use=0 \
