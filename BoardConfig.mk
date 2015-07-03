@@ -31,6 +31,13 @@ BOARD_KERNEL_PAGESIZE := 2048
 BOARD_KERNEL_CMDLINE  := androidboot.hardware=qcom user_debug=31 androidboot.baseband=msm msm_rtb.filter=0x3F ehci-hcd.park=3 vmalloc=400M
 BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x02000000
 
+# QCOM hardware
+COMMON_GLOBAL_CFLAGS += -DQCOM_HARDWARE
+BOARD_USES_QCOM_HARDWARE := true
+TARGET_QCOM_AUDIO_VARIANT := caf
+TARGET_QCOM_DISPLAY_VARIANT := caf
+TARGET_QCOM_MEDIA_VARIANT := caf
+
 # Use legacy MMAP for pre-lollipop blobs
 BOARD_USES_LEGACY_MMAP := true
 
@@ -57,8 +64,6 @@ WIFI_DRIVER_FW_PATH_STA          := "sta"
 WIFI_DRIVER_FW_PATH_AP           := "ap"
 
 BOARD_USE_SONY_MACUPDATE := true
-
-BOARD_HARDWARE_CLASS := device/sony/huashan/cmhw
 
 # Sensors
 SOMC_CFG_SENSORS := true
@@ -103,7 +108,6 @@ TARGET_USERIMAGES_USE_F2FS := true
 TARGET_OTA_ASSERT_DEVICE := C5302,C5303,C5306,huashan
 
 # Audio
-BOARD_USES_LEGACY_ALSA_AUDIO := true
 TARGET_USES_QCOM_COMPRESSED_AUDIO := true
 BOARD_HAVE_NEW_QCOM_CSDCLIENT := true
 BOARD_HAVE_CSD_FAST_CALL_SWITCH := true
@@ -114,6 +118,29 @@ BOARD_USES_SEPERATED_VOICE_SPEAKER_MIC := true
 # Fm Radio
 AUDIO_FEATURE_ENABLED_FM := true
 QCOM_FM_ENABLED := true
+
+# TWRP configs
+TARGET_NO_SEPARATE_RECOVERY := true
+TW_THEME := portrait_hdpi
+RECOVERY_GRAPHICS_USE_LINELENGTH := true
+TW_HAS_NO_RECOVERY_PARTITION := true
+TW_FLASH_FROM_STORAGE := true
+TW_EXTERNAL_STORAGE_PATH := "/external_sd"
+TW_EXTERNAL_STORAGE_MOUNT_POINT := "external_sd"
+TW_DEFAULT_EXTERNAL_STORAGE := true
+TW_INCLUDE_JB_CRYPTO := true
+TW_CRYPTO_FS_TYPE := "ext4"
+TW_CRYPTO_REAL_BLKDEV := "/dev/block/platform/msm_sdcc.1/by-name/Userdata"
+TW_CRYPTO_MNT_POINT := "/data"
+TW_CRYPTO_FS_OPTIONS := "nosuid,nodev,barrier=1,noauto_da_alloc,discard"
+TW_CRYPTO_FS_FLAGS := "0x00000406"
+TW_CRYPTO_KEY_LOC := "footer"
+TW_INCLUDE_FUSE_EXFAT := true
+TW_BRIGHTNESS_PATH := /sys/devices/i2c-10/10-0040/leds/lcd-backlight1/brightness
+TW_SECONDARY_BRIGHTNESS_PATH := /sys/devices/i2c-10/10-0040/leds/lcd-backlight2/brightness
+TW_MAX_BRIGHTNESS := 255
+TW_NO_USB_STORAGE := true
+TW_NO_SCREEN_BLANK := true
 
 # Partition information
 BOARD_VOLD_MAX_PARTITIONS := 26
