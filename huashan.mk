@@ -12,9 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.vendor.extension_library=libqti-perfd-client.so
-
 DEVICE_PACKAGE_OVERLAYS += device/sony/huashan/overlay
 
 # This device is xhdpi.
@@ -251,6 +248,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PACKAGES += \
     librs_jni \
     com.android.future.usb.accessory
+
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.vendor.extension_library=libqti-perfd-client.so
 
 # Set default USB interface
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
