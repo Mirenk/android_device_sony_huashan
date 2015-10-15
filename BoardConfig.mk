@@ -180,6 +180,14 @@ TW_MAX_BRIGHTNESS := 255
 TW_NO_USB_STORAGE := true
 TW_NO_SCREEN_BLANK := true
 
+#MultiROM config. MultiROM also uses parts of TWRP config
+MR_INPUT_TYPE := type_b
+MR_INIT_DEVICES := device/sony/huashan/mr_init_devices.c
+MR_DPI := hdpi
+MR_DPI_FONT := 216
+MR_FSTAB := device/sony/huashan/rootdir/twrp.fstab
+MR_KEXEC_MEM_MIN := 0x85000000
+
 # Partition information
 BOARD_VOLD_MAX_PARTITIONS := 26
 
