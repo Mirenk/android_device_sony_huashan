@@ -199,11 +199,11 @@ PRODUCT_PACKAGES += \
     tinymix
 
 # FM radio
-PRODUCT_PACKAGES += \
-    FM2 \
-    FMRecord \
-    libqcomfm_jni \
-    qcom.fmradio
+#PRODUCT_PACKAGES += \
+#    FM2 \
+#    FMRecord \
+#    libqcomfm_jni \
+#    qcom.fmradio
 
 # Bluetooth
 PRODUCT_PACKAGES += \
@@ -242,11 +242,6 @@ PRODUCT_PACKAGES += \
     wpa_supplicant \
     wpa_supplicant.conf
 
-# Misc
-PRODUCT_PACKAGES += \
-    librs_jni \
-    com.android.future.usb.accessory
-
 # Lights
 PRODUCT_PACKAGES += \
     lights.msm8960
@@ -258,10 +253,6 @@ PRODUCT_PACKAGES += \
 # Thermal management
 PRODUCT_PACKAGES += \
     thermanager
-
-# Set default USB interface
-PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
-    persist.sys.usb.config=mtp
 
 # ART
 PRODUCT_PROPERTY_OVERRIDES += \
