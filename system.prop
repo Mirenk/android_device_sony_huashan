@@ -14,3 +14,5 @@ persist.timed.enable=true
 persist.gps.qmienabled=true
 
 hw.fm.internal_antenna=true
+
+persist.sys.lazy.dexopt=true
