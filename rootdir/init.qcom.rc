@@ -258,9 +258,6 @@ on post-fs-data
     # Camera
     mkdir /data/misc/camera 0771 root camera
 
-    # Create /data/time folder for time-services
-    mkdir /data/time 0700 system system
-
     chown system /dev/block/platform/msm_sdcc.1/by-name
 
     # Permissions for mpdecision and thermald
@@ -448,11 +445,6 @@ service wcnss-service /system/bin/wcnss_service
     group system wifi
     disabled
     oneshot
-
-service time_daemon /system/bin/time_daemon
-    class late_start
-    user root
-    group root
 
 service secchand /system/bin/secchand
     user root

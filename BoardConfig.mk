@@ -45,9 +45,6 @@ TARGET_NO_RADIOIMAGE := true
 # Build
 USE_CLANG_PLATFORM_BUILD := true
 
-# Time
-BOARD_USES_QC_TIME_SERVICES := true
-
 # Dumpstate
 BOARD_LIB_DUMPSTATE := libdumpstate.sony
 
