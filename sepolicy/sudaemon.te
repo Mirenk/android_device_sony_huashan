@@ -1,0 +1,1 @@
+allow sudaemon appops_service:service_manager find;

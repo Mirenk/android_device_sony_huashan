@@ -261,6 +261,12 @@ on post-fs-data
     # Create /data/time folder for time-services
     mkdir /data/time 0700 system system
 
+    chown system /dev/block/platform/msm_sdcc.1/by-name
+
+    # Permissions for mpdecision and thermald
+    mkdir /dev/socket/mpdecision 0770 system system
+    chmod 2770 /dev/socket/mpdecision
+
     setprop vold.post_fs_data_done 1
 
     rm /data/local/tmp/adreno_config.txt
@@ -273,8 +279,9 @@ on property:init.svc.wpa_supplicant=stopped
 service tad_static /sbin/tad_static /dev/block/mmcblk0 1,16
     user root
     group root
-    socket tad stream 0666 system system
+    socket tad stream 0660 system system
     class core
+    seclabel u:r:tad_static:s0
 
 # Wi-Fi and BT MAC addresses
 service macaddrsetup /system/bin/macaddrsetup /sys/devices/platform/wcnss_wlan.0/wcnss_mac_addr /data/misc/bluetooth/bdaddr
@@ -412,6 +419,7 @@ service thermanager /system/bin/thermanager /system/etc/thermanager.xml
     class main
     user root
     group root
+    seclabel u:r:thermanager:s0
 
 # Healthd
 service charger /sbin/healthd -c
@@ -432,6 +440,7 @@ service irsc_util /system/bin/irsc_util "/etc/sec_config"
 service ta_qmi_service /system/bin/ta_qmi_service
     user root
     class main
+    seclabel u:r:ta_qmi_service:s0
 
 service wcnss-service /system/bin/wcnss_service
     class late_start
@@ -445,7 +454,8 @@ service time_daemon /system/bin/time_daemon
     user root
     group root
 
-service secchan /system/bin/secchand
+service secchand /system/bin/secchand
     user root
     group root
     class core
+    seclabel u:r:secchand:s0
