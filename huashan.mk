@@ -233,6 +233,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PACKAGES += \
     sensors.msm8960
 
+# Time for RIL
+PRODUCT_PACKAGES += \
+    libtime_genoff
+
 # Wifi service
 PRODUCT_PACKAGES += \
     wcnss_service
@@ -299,6 +303,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # QCOM
 PRODUCT_PROPERTY_OVERRIDES += \
+    persist.data.qmi.adb_logmask=0 \
     com.qc.hardware=true
 
 # QCOM Location
